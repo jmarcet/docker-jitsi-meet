@@ -4,8 +4,7 @@ services:
         image: jitsi/web:${JITSI_IMAGE_VERSION:-unstable}
         restart: ${RESTART_POLICY:-unless-stopped}
         ports:
-            - '${HTTP_PORT}:80'
-            - '${HTTPS_PORT}:443'
+            - '127.0.0.1:${HTTP_PORT}:80'
         volumes:
             - ${CONFIG}/web:/config:Z
             - ${CONFIG}/web/crontabs:/var/spool/cron/crontabs:Z
@@ -184,10 +183,14 @@ services:
             - XMPP_RECORDER_DOMAIN
             - WHITEBOARD_COLLAB_SERVER_PUBLIC_URL
             - WHITEBOARD_COLLAB_SERVER_URL_BASE
+        mac_address: ${MAC_JITSI_WEB}
         networks:
             meet.jitsi:
         depends_on:
             - jvb
+        cpus: 1
+        mem_limit: 128mb
+        memswap_limit: 128mb
 
     # XMPP server
     prosody:
@@ -335,10 +338,14 @@ services:
             - XMPP_RECORDER_DOMAIN
             - XMPP_SERVER_S2S_PORT
             - XMPP_SPEAKERSTATS_MODULES
+        mac_address: ${MAC_JITSI_PROSODY}
         networks:
             meet.jitsi:
                 aliases:
                     - ${XMPP_SERVER:-xmpp.meet.jitsi}
+        cpus: 2
+        mem_limit: 128mb
+        memswap_limit: 128mb
 
     # Focus component
     jicofo:
@@ -433,8 +440,12 @@ services:
             - MAX_SSRC_GROUPS_PER_USER
         depends_on:
             - prosody
+        mac_address: ${MAC_JITSI_JICOFO}
         networks:
             meet.jitsi:
+        cpus: 2
+        mem_limit: 1gb
+        memswap_limit: 1gb
 
     # Video bridge
     jvb:
@@ -502,9 +513,34 @@ services:
             - XMPP_PORT
         depends_on:
             - prosody
+        mac_address: ${MAC_JITSI_JVB}
         networks:
             meet.jitsi:
+        cpus: 2
+        mem_limit: 1gb
+        memswap_limit: 1gb
+
+    # Etherpad: real-time collaborative document editing
+    etherpad:
+        image: jitsi/etherpad
+        mac_address: ${MAC_JITSI_ETHERPAD}
+        networks:
+            meet.jitsi:
+                aliases:
+                    - etherpad.meet.jitsi
+        cpus: 2
+        mem_limit: 1gb
+        memswap_limit: 1gb
 
 # Custom network so all services can communicate using a FQDN
 networks:
     meet.jitsi:
+        driver: bridge
+        ipam:
+            driver: default
+            config:
+                - subnet: ${SUBNET_JITSI}
+        driver_opts:
+            com.docker.network.bridge.name: br-jitsi
+
+# vim: et ci pi sts=2 sw=2 ts=2
