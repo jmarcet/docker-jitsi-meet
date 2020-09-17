@@ -111,7 +111,7 @@ services:
                 aliases:
                     - ${XMPP_DOMAIN}
         cpus: 1
-        cpuset: 2,6,3,7
+        cpuset: 2,6,3
         mem_limit: 128mb
         memswap_limit: 128mb
 
@@ -185,7 +185,7 @@ services:
                 aliases:
                     - ${XMPP_SERVER}
         cpus: 2
-        cpuset: 2,6,3,7
+        cpuset: 2,6,3
         mem_limit: 128mb
         memswap_limit: 128mb
 
@@ -236,7 +236,7 @@ services:
         networks:
             meet.jitsi:
         cpus: 2
-        cpuset: 2,6,3,7
+        cpuset: 2,6,3
         mem_limit: 1gb
         memswap_limit: 1gb
 
@@ -281,7 +281,7 @@ services:
                 aliases:
                     - jvb.meet.jitsi
         cpus: 2
-        cpuset: 2,6,3,7
+        cpuset: 2,6,3
         mem_limit: 1gb
         memswap_limit: 1gb
 
@@ -294,7 +294,7 @@ services:
                 aliases:
                     - etherpad.meet.jitsi
         cpus: 2
-        cpuset: 2,6,3,7
+        cpuset: 2,6,3
         mem_limit: 1gb
         memswap_limit: 1gb
 
