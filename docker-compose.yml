@@ -521,8 +521,8 @@ services:
             meet.jitsi:
         cpus: 2
         cpuset: 2,6,3
-        mem_limit: 1gb
-        memswap_limit: 1gb
+        mem_limit: 2gb
+        memswap_limit: 2gb
 
     # Etherpad: real-time collaborative document editing
     etherpad:
