@@ -532,6 +532,7 @@ services:
     etherpad:
         image: jitsi/etherpad
         container_name: jitsi_etherpad
+        restart: ${RESTART_POLICY}
         mac_address: ${MAC_JITSI_ETHERPAD}
         networks:
             meet.jitsi:
