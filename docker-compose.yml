@@ -186,6 +186,8 @@ services:
             - WHITEBOARD_COLLAB_SERVER_PUBLIC_URL
             - WHITEBOARD_COLLAB_SERVER_URL_BASE
         mac_address: ${MAC_JITSI_WEB}
+        labels:
+          org.label-schema.group: "monitored"
         networks:
             meet.jitsi:
         depends_on:
@@ -343,6 +345,8 @@ services:
             - XMPP_SERVER_S2S_PORT
             - XMPP_SPEAKERSTATS_MODULES
         mac_address: ${MAC_JITSI_PROSODY}
+        labels:
+          org.label-schema.group: "monitored"
         networks:
             meet.jitsi:
                 aliases:
@@ -447,6 +451,8 @@ services:
         depends_on:
             - prosody
         mac_address: ${MAC_JITSI_JICOFO}
+        labels:
+          org.label-schema.group: "monitored"
         networks:
             meet.jitsi:
         cpus: 2
@@ -522,6 +528,8 @@ services:
         depends_on:
             - prosody
         mac_address: ${MAC_JITSI_JVB}
+        labels:
+          org.label-schema.group: "monitored"
         networks:
             meet.jitsi:
         cpus: 2
